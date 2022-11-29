@@ -1,5 +1,6 @@
 <script>
-import axios from "axios";
+import { store } from "../store.js";
+
 import CardCharacter from "./CardCharacter.vue";
 
 export default {
@@ -9,26 +10,22 @@ export default {
   },
   data() {
     return {
-      characters: [],
+      store,
     };
-  },
-  created() {
-    axios.get("https://rickandmortyapi.com/api/character").then((resp) => {
-      this.characters = resp.data.results;
-    });
   },
 };
 </script>
 
 <template>
   <section class="container py-4">
-    <div class="row g-3">
+    <div class="row g-3" v-if="store.characters.length > 0">
       <CardCharacter
-        v-for="character in characters"
+        v-for="character in store.characters"
         class="col-sm-6 col-lg-3"
         :info="character"
       />
     </div>
+    <h3 v-else>Nessun risultato</h3>
   </section>
 </template>
 
